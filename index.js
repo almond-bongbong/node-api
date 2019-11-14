@@ -1,14 +1,21 @@
-const http = require('http');
+const express = require('express');
+const morgan = require('morgan');
+const app = express();
 
-const hostname = '127.0.0.1';
-const port = 3000;
+const logger = (req, res, next) => {
+  console.log('i am logger');
+  next();
+};
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello, World!\n');
-});
+const logger2 = (req, res, next) => {
+  console.log('i am logger 2');
+  next();
+};
 
-server.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`);
+app.use(logger);
+app.use(logger2);
+app.use(morgan('dev'));
+
+app.listen(3000, () => {
+  console.log('listen server');
 });
