@@ -1,21 +1,10 @@
-const express = require('express');
-const morgan = require('morgan');
-const app = express();
+var express = require('express');
+var app = express();
 
-const logger = (req, res, next) => {
-  console.log('i am logger');
-  next();
-};
+app.get('/', function (req, res) {
+  res.send('Hello World!');
+});
 
-const logger2 = (req, res, next) => {
-  console.log('i am logger 2');
-  next();
-};
-
-app.use(logger);
-app.use(logger2);
-app.use(morgan('dev'));
-
-app.listen(3000, () => {
-  console.log('listen server');
+app.listen(3000, function () {
+  console.log('Example app listening on port 3000!');
 });
