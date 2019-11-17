@@ -133,4 +133,35 @@ describe('PUT /users/:id 는', () => {
         });
     });
   });
+
+  describe('실패시', () => {
+    it('정수가 아닌 id일 경우 400을 응답한다.', (done) => {
+      const name = 'den';
+      request(app)
+        .put('/users/a')
+        .send({ name })
+        .expect(400, done);
+    });
+
+    it('name 값이 없을 경우 400을 응답한다.', (done) => {
+      request(app)
+        .put('/users/3')
+        .expect(400, done);
+    });
+
+    it('존재하지 않는 유저의 경우 404를 응답한다.', (done) => {
+      const name = 'den';
+      request(app)
+        .put('/users/999')
+        .send({ name })
+        .expect(404, done);
+    });
+
+    it('이미 존재하는 name일 경우 409를 응답한다.', (done) => {
+      request(app)
+        .put('/users/3')
+        .send({ name: 'bek' })
+        .expect(409, done);
+    });
+  });
 });
