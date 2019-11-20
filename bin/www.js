@@ -1,5 +1,10 @@
 const app = require('../');
+const syncDb = require('./sync-db');
 
-app.listen(3000, () => {
-  console.log('Example app listening on port 3000!');
+syncDb().then(() => {
+  console.log('Sync database!');
+
+  app.listen(3000, () => {
+    console.log('Example app listening on port 3000!');
+  });
 });
